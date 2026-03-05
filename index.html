@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Controle de Estoque</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-6">
+
+    <!-- LOGIN -->
+    <div id="login-container" class="bg-white p-6 rounded shadow-md w-full max-w-md">
+
+        <h2 class="text-xl font-bold mb-4 text-center">Login</h2>
+
+        <form id="login-form" class="space-y-3 mb-6">
+            <input id="login-email" type="email" placeholder="Email" required class="w-full border p-2 rounded">
+            <input id="login-password" type="password" placeholder="Senha" required class="w-full border p-2 rounded">
+            <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded">Entrar</button>
+        </form>
+
+        <hr class="my-4">
+
+        <form id="register-form" class="space-y-3">
+            <input id="register-email" type="email" placeholder="Email" required class="w-full border p-2 rounded">
+            <input id="register-password" type="password" placeholder="Senha" required
+                class="w-full border p-2 rounded">
+            <button type="submit" class="w-full bg-green-500 text-white p-2 rounded">Registrar</button>
+        </form>
+
+    </div>
+
+    <!-- APP -->
+    <div id="app-container" class="hidden bg-white p-6 rounded shadow-md w-full max-w-3xl">
+
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-xl font-bold">Controle de Estoque</h1>
+            <button id="logout-btn" class="bg-red-500 text-white px-4 py-2 rounded">Sair</button>
+        </div>
+
+        <!-- FORM -->
+        <form id="item-form" class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
+            <input id="item-name" type="text" placeholder="Nome do item" required class="border p-2 rounded">
+            <input id="item-current" type="number" min="0" placeholder="Qtd Atual" required class="border p-2 rounded">
+            <input id="item-ideal" type="number" min="0" placeholder="Qtd Ideal" required class="border p-2 rounded">
+            <button type="submit" class="md:col-span-3 bg-blue-500 text-white p-2 rounded">Adicionar</button>
+        </form>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <h2 class="font-semibold mb-2">Temos</h2>
+                <div id="have-list" class="space-y-2"></div>
+            </div>
+            <div>
+                <h2 class="font-semibold mb-2">Precisamos Comprar</h2>
+                <div id="buy-list" class="space-y-2"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="module" src="./app.js"></script>
+
+</body>
+
+</html>
