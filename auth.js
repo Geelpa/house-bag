@@ -1,70 +1,56 @@
-// auth.js
+import { auth } from "./firebase-config.js"
 
 import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"
 
-import { auth } from "./firebase.js";
 
-// 🔥 EXPORT NOMEADO CORRETO
-export function initAuth(onUserLogged) {
 
-  const loginContainer = document.getElementById("login-container");
-  const appContainer = document.getElementById("app-container");
+const form = document.getElementById("loginForm")
+const registerBtn = document.getElementById("registerBtn")
+const errorMessage = document.getElementById("errorMessage")
 
-  const loginForm = document.getElementById("login-form");
-  const registerForm = document.getElementById("register-form");
-  const logoutBtn = document.getElementById("logout-btn");
 
-  // ===== LOGIN =====
-  loginForm?.addEventListener("submit", async (e) => {
-    e.preventDefault();
 
-    const email = document.getElementById("login-email").value;
-    const password = document.getElementById("login-password").value;
+form.addEventListener("submit", async (e) => {
+
+    e.preventDefault()
+
+    const email = document.getElementById("email").value
+    const password = document.getElementById("password").value
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+
+        await signInWithEmailAndPassword(auth, email, password)
+
+        window.location.href = "index.html"
+
     } catch (error) {
-      alert("Erro no login: " + error.message);
+
+        errorMessage.textContent = "Erro ao fazer login"
+
     }
-  });
 
-  // ===== REGISTRO =====
-  registerForm?.addEventListener("submit", async (e) => {
-    e.preventDefault();
+})
 
-    const email = document.getElementById("register-email").value;
-    const password = document.getElementById("register-password").value;
+
+
+registerBtn.addEventListener("click", async () => {
+
+    const email = document.getElementById("email").value
+    const password = document.getElementById("password").value
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+
+        await createUserWithEmailAndPassword(auth, email, password)
+
+        window.location.href = "index.html"
+
     } catch (error) {
-      alert("Erro no registro: " + error.message);
+
+        errorMessage.textContent = "Erro ao criar conta"
+
     }
-  });
 
-  // ===== LOGOUT =====
-  logoutBtn?.addEventListener("click", async () => {
-    await signOut(auth);
-  });
-
-  // ===== OBSERVADOR DE ESTADO =====
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      loginContainer.classList.add("hidden");
-      appContainer.classList.remove("hidden");
-
-      if (typeof onUserLogged === "function") {
-        onUserLogged(user.uid);
-      }
-
-    } else {
-      loginContainer.classList.remove("hidden");
-      appContainer.classList.add("hidden");
-    }
-  });
-}
+})
