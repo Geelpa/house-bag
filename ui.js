@@ -2,7 +2,8 @@ import {
     addItem,
     listenItems,
     updateItemQuantity,
-    deleteItem
+    deleteItem,
+    itemExists
 } from "./items-service.js"
 
 import { auth } from "./firebase-config.js"
@@ -13,8 +14,11 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"
 
 
+const itemsContainer = document.getElementById("itemsContainer")
+const shoppingContainer = document.getElementById("shoppingContainer")
 
-
+const showItemsBtn = document.getElementById("showItemsBtn")
+const showShoppingBtn = document.getElementById("showShoppingBtn")
 
 const form = document.getElementById("itemForm")
 const itemsList = document.getElementById("itemsList")
@@ -23,7 +27,19 @@ const logoutBtn = document.getElementById("logoutBtn")
 
 let uid = null
 
+showItemsBtn.onclick = () => {
 
+    itemsContainer.classList.remove("hidden")
+    shoppingContainer.classList.add("hidden")
+
+}
+
+showShoppingBtn.onclick = () => {
+
+    shoppingContainer.classList.remove("hidden")
+    itemsContainer.classList.add("hidden")
+
+}
 
 onAuthStateChanged(auth, (user) => {
 
@@ -43,10 +59,7 @@ onAuthStateChanged(auth, (user) => {
 
 
 function startApp() {
-
     listenItems(uid, renderUI)
-
-
 
     let itemsCache = []
     // formulario
@@ -60,7 +73,6 @@ function startApp() {
 
 
 
-        // impedir nome vazio
         if (!name) {
             alert("Informe o nome do item")
             return
@@ -68,13 +80,15 @@ function startApp() {
 
 
 
-        // impedir duplicados
-        const exists = itemsCache.some(item =>
-            item.name.toLowerCase() === name.toLowerCase()
-        )
+        name = name.charAt(0).toUpperCase() + name.slice(1)
+
+
+
+        // validação no backend
+        const exists = await itemExists(uid, name)
 
         if (exists) {
-            alert("Esse item já existe na lista")
+            alert("Esse item já está cadastrado")
             return
         }
 
@@ -178,6 +192,8 @@ function renderItem(item) {
     itemsList.appendChild(div)
 
 }
+
+
 
 
 

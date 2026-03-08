@@ -51,14 +51,24 @@
 
         </div>
 
+        <div class="md:hidden flex gap-2 mb-4">
 
+            <button id="showItemsBtn" class="flex-1 bg-blue-500 text-white p-2 rounded">
+                Itens em casa
+            </button>
+
+            <button id="showShoppingBtn" class="flex-1 bg-green-500 text-white p-2 rounded">
+                Lista de compras
+            </button>
+
+        </div>
         <!-- LISTAS -->
 
         <div class="grid md:grid-cols-2 gap-6">
 
             <!-- ITENS EM CASA -->
 
-            <div class="bg-white p-4 rounded shadow">
+            <div id="itemsContainer" class="bg-white p-4 rounded shadow">
 
                 <h2 class="text-lg font-bold mb-4">
                     Itens em casa
@@ -71,7 +81,7 @@
 
             <!-- LISTA DE COMPRAS -->
 
-            <div class="bg-white p-4 rounded shadow">
+            <div id="shoppingContainer" class="bg-white p-4 rounded shadow hidden md:block">
 
                 <h2 class="text-lg font-bold mb-4">
                     Precisa comprar
